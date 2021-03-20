@@ -2,17 +2,18 @@
 
 export RUNNER_ALLOW_RUNASROOT=1
 export PATH=$PATH:/actions-runner
+API_VERSION=v3
+API_HEADER="Accept: application/vnd.github.${API_VERSION}+json"
+AUTH_HEADER="Authorization: token ${TOKEN}"
 
 deregister_runner() {
-  echo "Caught SIGTERM. Deregistering runner"
-  RUNNER_TOKEN=`curl -X POST -H "Accept: ${ACCEPT}" https://${USER}:${TOKEN}@api.github.com/repos/${REPO}/actions/runners/registration-token|grep token|cut -d'"' -f 4`
-  ./config.sh remove --token "${RUNNER_TOKEN}"
-  exit
+    echo "Caught SIGTERM. Deregistering runner"
+    RUNNER_TOKEN=`curl -X POST -H "${API_HEADER}" -H "${AUTH_HEADER}" https://api.github.com/repos/${REPO}/actions/runners/registration-token|jq -r '.token'`
+    ./config.sh remove --token "${RUNNER_TOKEN}"
+    exit
 }
 
-ACCEPT="application/vnd.github.v3+json"
-
-RUNNER_TOKEN=`curl -X POST -H "Accept: ${ACCEPT}" https://${USER}:${TOKEN}@api.github.com/repos/${REPO}/actions/runners/registration-token|grep token|cut -d'"' -f 4`
+RUNNER_TOKEN=`curl -X POST -H "${API_HEADER}" -H "${AUTH_HEADER}" https://api.github.com/repos/${REPO}/actions/runners/registration-token|jq -r '.token'`
 
 REPO_URL="https://github.com/{REPO}"
 
