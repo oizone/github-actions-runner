@@ -15,7 +15,7 @@ deregister_runner() {
 
 RUNNER_TOKEN=`curl -X POST -H "${API_HEADER}" -H "${AUTH_HEADER}" https://api.github.com/repos/${REPO}/actions/runners/registration-token|jq -r '.token'`
 
-REPO_URL="https://github.com/{REPO}"
+REPO_URL="https://github.com/${REPO}"
 
 echo "Configuring"
 ./config.sh \
