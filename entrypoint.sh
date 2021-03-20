@@ -12,8 +12,9 @@ deregister_runner() {
 
 ACCEPT="application/vnd.github.v3+json"
 
-
 RUNNER_TOKEN=`curl -X POST -H "Accept: ${ACCEPT}" https://${USER}:${TOKEN}@api.github.com/repos/${REPO}/actions/runners/registration-token|grep token|cut -d'"' -f 4`
+
+REPO_URL="https://github.com/{REPO}"
 
 echo "Configuring"
 ./config.sh \
