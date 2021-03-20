@@ -12,7 +12,7 @@ ARG APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=yes
 #RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb
 #RUN dpkg -i packages-microsoft-prod.deb
 RUN apt-get update
-RUN apt-get install -y --no-install-recommends python3 unzip xorriso python3-boto3
+RUN apt-get install -y --no-install-recommends python3 unzip xorriso python3-boto3 jq
 #RUN apt-get install -y --no-install-recommends python3 unzip xorriso python3-boto3 powershell
 
 WORKDIR /actions-runner
